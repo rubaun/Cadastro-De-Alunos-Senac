@@ -1,0 +1,112 @@
+[
+  {
+    "Nome": "Liz Malu Eloá Almeida",
+    "Cpf": "631.719.283-96",
+    "DataNascimento": "25/02/1962v",
+    "Cep": "58090-620",
+    "Endereco": "Rua Compositor Haroldo Lobo",
+    "Bairro": "Alto do Mateus",
+    "Cidade": "João Pessoa",
+    "Estado": "PB",
+    "Telefone": "(83) 99187-2144"
+  },
+  {
+    "Nome": "Mariana Sara Nair Nunes",
+    "Cpf": "754.884.716-50",
+    "DataNascimento": "08/09/1981 00:00",
+    "Cep": "14802-115",
+    "Endereco": "Avenida Lindo Barnabé",
+    "Bairro": "Vila Independência",
+    "Cidade": "Araraquara",
+    "Estado": "SP",
+    "Telefone": "(16) 99141-7370"
+  },
+  {
+    "Nome": "Yago Nicolas Carvalho",
+    "Cpf": "591.976.802-90",
+    "DataNascimento": "11/09/1994 00:00",
+    "Cep": "69058-295",
+    "Endereco": "Rua Amélia Rates",
+    "Bairro": "Novo Aleixo",
+    "Cidade": "Manaus",
+    "Estado": "AM",
+    "Telefone": "(92) 98435-9491"
+  },
+  {
+    "Nome": "Flávia Sônia Bernardes",
+    "Cpf": "631.950.812-45",
+    "DataNascimento": "24/03/1983 00:00",
+    "Cep": "81870-494",
+    "Endereco": "Travessa Admar Bertoli",
+    "Bairro": "Pinheirinho",
+    "Cidade": "Curitiba",
+    "Estado": "PR",
+    "Telefone": "(41) 98606-7592"
+  },
+  {
+    "Nome": "Martin Leandro das Neves",
+    "Cpf": "358.951.257-19",
+    "DataNascimento": "12/05/2000 00:00",
+    "Cep": "29132-024",
+    "Endereco": "Comunidade Morobá",
+    "Bairro": "Jucu Setor II",
+    "Cidade": "Viana",
+    "Estado": "ES",
+    "Telefone": "(27) 99712-2673"
+  },
+  {
+    "Nome": "Matheus Geraldo Nascimento",
+    "Cpf": "595.145.941-93",
+    "DataNascimento": "09/09/1990 00:00",
+    "Cep": "78715-194",
+    "Endereco": "Avenida Irmã Bernada",
+    "Bairro": "Jardim Tropical",
+    "Cidade": "Rondonópolis",
+    "Estado": "MT",
+    "Telefone": "(66) 99416-5665"
+  },
+  {
+    "Nome": "Enzo Paulo Levi Araújo",
+    "Cpf": "599.924.365-30",
+    "DataNascimento": "03/09/1979 00:00",
+    "Cep": "69313-768",
+    "Endereco": "Rua Raimundo Alves Soares",
+    "Bairro": "União",
+    "Cidade": "Boa Vista",
+    "Estado": "RR",
+    "Telefone": "(95) 98103-0387"
+  },
+  {
+    "Nome": "Bento Julio Severino da Luz",
+    "Cpf": "434.387.826-00",
+    "DataNascimento": "27/07/1976 00:00",
+    "Cep": "69900-336",
+    "Endereco": "Rua Thaumaturgo de Azevedo",
+    "Bairro": "Ipase",
+    "Cidade": "Rio Branco",
+    "Estado": "AC",
+    "Telefone": "(68) 98732-0696"
+  },
+  {
+    "Nome": "Sebastiana Mirella Catarina Pires",
+    "Cpf": "745.715.319-58",
+    "DataNascimento": "11/03/1954 00:00",
+    "Cep": "33809-067",
+    "Endereco": "Alameda de Ligação III",
+    "Bairro": "Jardim Colonial",
+    "Cidade": "Ribeirão das Neves",
+    "Estado": "MG",
+    "Telefone": "(31) 98140-6390"
+  },
+  {
+    "Nome": "Lorenzo Vicente Melo",
+    "Cpf": "380.129.470-64",
+    "DataNascimento": "27/02/1972 00:00",
+    "Cep": "68182-000",
+    "Endereco": "Rua Primeira",
+    "Bairro": "Mesquitas",
+    "Cidade": "Itaituba",
+    "Estado": "PA",
+    "Telefone": "(93) 99608-1144"
+  }
+]

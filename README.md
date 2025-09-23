@@ -26,4 +26,4 @@ Também explora conceitos iniciais de **persistência de dados**, podendo armaze
 - **Framework:** .NET 9 / Windows Forms  
 - **Banco de Dados:** SQLite (opcional)  
 - **Controle de Versão:** Git + GitHub  
-
+- **Gerador de Pessoas:** https://www.4devs.com.br/gerador_de_pessoas

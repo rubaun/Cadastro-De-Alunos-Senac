@@ -18,6 +18,7 @@ namespace Cadastro.Data
 
         public static bool CarregarCadastros(AlunoCadastro cadastro)
         {
+
             string conteudo = File.ReadAllText("alunos.json");
 
             List<Aluno> alunosLidos = JsonSerializer.Deserialize<List<Aluno>>(conteudo);

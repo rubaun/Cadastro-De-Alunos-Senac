@@ -1,4 +1,4 @@
-using Cadastro.Classes;
+using Cadastro.Models;
 
 namespace Cadastro
 {

@@ -6,9 +6,15 @@ namespace Cadastro
     {
         AlunoCadastro cadastro = new AlunoCadastro();
         bool editar;
+
         public Form1()
         {
             InitializeComponent();
+
+            if(GerenciaDados.CarregarCadastros(cadastro))
+            {
+                CarregarCadastrosLista();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -30,6 +36,8 @@ namespace Cadastro
             {
                 EditarAluno();
             }
+
+            GerenciaDados.SalvarCadastros(cadastro.ListaGeral());
         }
 
         private void CadastrarAluno()
@@ -47,9 +55,19 @@ namespace Cadastro
                 Cep = boxCEP.Text
             };
 
-            cadastro.CadastrarAluno(aluno);
-            listCadastro.Items.Add($"{ aluno.Cpf}-{ aluno.Nome}");
-            LimpaForm();
+            if(cadastro.ConsultaCpf(aluno.Cpf))
+            {
+                avisos.Text = "CPF já cadastrado.";
+                LimpaForm();
+                return;
+            }
+            else
+            {
+                cadastro.CadastrarAluno(aluno);
+                listCadastro.Items.Add($"{ aluno.Cpf}-{ aluno.Nome}");
+                LimpaForm();
+            }
+                
         }
 
         private void EditarAluno()
@@ -202,6 +220,16 @@ namespace Cadastro
             AtivarModoEditar();
         }
 
+        private void CarregarCadastrosLista()
+        {
+            listCadastro.Items.Clear();
+
+            foreach (var aluno in cadastro.ListaGeral())
+            {
+                listCadastro.Items.Add($"{aluno.Cpf}-{aluno.Nome}");
+            }
+        }
+
         private void AtivarModoEditar()
         {
             if (editar)
@@ -244,6 +272,8 @@ namespace Cadastro
             {
                 listCadastro.Items.Add($"{aluno.Cpf}-{aluno.Nome}");
             }
+
+            GerenciaDados.SalvarCadastros(cadastro.ListaGeral());
         }
 
     }

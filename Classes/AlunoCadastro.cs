@@ -65,6 +65,18 @@ namespace Cadastro.Classes
             return new Aluno();
         }
 
+        public bool ConsultaCpf(string cpf)
+        {
+            foreach (var aluno in alunos)
+            {
+                if(aluno.Cpf == cpf)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public void EditarCadastro(string Aluno, Aluno dadosNovos)
         {
             string cpfAluno = Aluno.Split('-')[0];
@@ -109,11 +121,6 @@ namespace Cadastro.Classes
         public List<Aluno> ListaGeral()
         {
             return alunos;
-        }
-
-        private void SalvarListaDeAlunos(List<Aluno> alunos)
-        {
-            GerenciaDados.SalvarCadastros(alunos);
         }
 
     }

@@ -15,15 +15,25 @@ namespace Cadastro.Classes
             File.WriteAllText("alunos.json", json);
         }
 
-        public static void CarregarCadastros(AlunoCadastro cadastro)
+        public static bool CarregarCadastros(AlunoCadastro cadastro)
         {
             string conteudo = File.ReadAllText("alunos.json");
+
             List<Aluno> alunosLidos = JsonSerializer.Deserialize<List<Aluno>>(conteudo);
 
-            foreach(var aluno in alunosLidos)
+            if(alunosLidos == null)
             {
-                cadastro.CadastrarAluno(aluno);
+                return false;
             }
+            else
+            {
+                foreach (var aluno in alunosLidos)
+                {
+                    cadastro.CadastrarAluno(aluno);
+                }
+
+                return true;
+            } 
         }
     }
 }

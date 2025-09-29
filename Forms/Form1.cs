@@ -1,5 +1,6 @@
-using Cadastro.Models;
 using Cadastro.Data;
+using Cadastro.Models;
+using System.Windows.Forms;
 
 namespace Cadastro
 {
@@ -12,16 +13,20 @@ namespace Cadastro
         {
             InitializeComponent();
 
-            if(GerenciaDados.CarregarCadastros(cadastro))
-            {
-                CarregarCadastrosLista();
-            }
+            //Utilizando Json
+            //if(GerenciaDados.CarregarCadastros(cadastro))
+            //{
+            //    CarregarCadastrosLista();
+            //}
+
+            //Utilizando Banco de Dados
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
 
-            if (cadastro.VerificaCadastro(boxCpf.Text) && !editar)
+            if (cadastro.ConsultaCpf(boxCpf.Text) && !editar)
             {
                 avisos.Text = "Aluno já cadastrado.";
             }
@@ -38,7 +43,8 @@ namespace Cadastro
                 EditarAluno();
             }
 
-            GerenciaDados.SalvarCadastros(cadastro.ListaGeral());
+            //Utilizando Json
+            //GerenciaDados.SalvarCadastros(cadastro.ListaGeral());
         }
 
         private void CadastrarAluno()
@@ -86,7 +92,7 @@ namespace Cadastro
                 Cep = boxCEP.Text
             };
 
-            cadastro.EditarCadastro(aluno.Cpf, aluno);
+            cadastro.EditarCadastro(aluno);
             LimpaForm();
             editar = false;
             AtivarModoEditar();
@@ -221,15 +227,16 @@ namespace Cadastro
             AtivarModoEditar();
         }
 
-        private void CarregarCadastrosLista()
-        {
-            listCadastro.Items.Clear();
+        //Utilizando Json
+        //private void CarregarCadastrosLista()
+        //{
+        //    listCadastro.Items.Clear();
 
-            foreach (var aluno in cadastro.ListaGeral())
-            {
-                listCadastro.Items.Add($"{aluno.Cpf}-{aluno.Nome}");
-            }
-        }
+        //    foreach (var aluno in cadastro.ListaGeral())
+        //    {
+        //        listCadastro.Items.Add($"{aluno.Cpf}-{aluno.Nome}");
+        //    }
+        //}
 
         private void AtivarModoEditar()
         {
@@ -253,13 +260,13 @@ namespace Cadastro
             string alunoExcluir = listCadastro.SelectedItem.ToString();
 
             DialogResult resultado = MessageBox.Show(
-                $"Tem certeza que deseja excluir: {cadastro.ConsultaNomeAluno(alunoExcluir)} ?", "Confirmação",
+                $"Tem certeza que deseja excluir: {cadastro.ConsultaCpf(alunoExcluir)} ?", "Confirmação",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
             if (resultado == DialogResult.Yes)
             {
-                cadastro.ExluirCadastro(alunoExcluir);
+                cadastro.ExcluirCadastro(alunoExcluir);
                 MessageBox.Show("Aluno excluído com sucesso!");
             }
             else
@@ -274,7 +281,8 @@ namespace Cadastro
                 listCadastro.Items.Add($"{aluno.Cpf}-{aluno.Nome}");
             }
 
-            GerenciaDados.SalvarCadastros(cadastro.ListaGeral());
+            //Utilizando Json
+            //GerenciaDados.SalvarCadastros(cadastro.ListaGeral());
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,24 +19,25 @@ namespace Cadastro.Data
 
         public static bool CarregarCadastros(AlunoCadastro cadastro)
         {
-
-            string conteudo = File.ReadAllText("alunos.json");
-
-            List<Aluno> alunosLidos = JsonSerializer.Deserialize<List<Aluno>>(conteudo);
-
-            if(alunosLidos == null)
+            string conteudo;
+            try
             {
-                return false;
-            }
-            else
-            {
+                conteudo = File.ReadAllText("alunos.json");
+                List<Aluno> alunosLidos = JsonSerializer.Deserialize<List<Aluno>>(conteudo);
+
                 foreach (var aluno in alunosLidos)
                 {
                     cadastro.CadastrarAluno(aluno);
                 }
 
                 return true;
-            } 
+            }
+            catch (FileNotFoundException)
+            {
+                return false;
+            }
         }
     }
 }
+
+*/

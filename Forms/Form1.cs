@@ -1,4 +1,4 @@
-using Cadastro.Data;
+Ôªøusing Cadastro.Data;
 using Cadastro.Models;
 using System.Windows.Forms;
 
@@ -6,21 +6,14 @@ namespace Cadastro
 {
     public partial class Form1 : Form
     {
-        AlunoCadastro cadastro = new AlunoCadastro();
-        bool editar;
+        AlunoCadastro cadastro;
+        Aluno? alunoSelecionado;
 
-        public Form1()
+        public Form1() //Construtor
         {
             InitializeComponent();
-
-            //Utilizando Json
-            //if(GerenciaDados.CarregarCadastros(cadastro))
-            //{
-            //    CarregarCadastrosLista();
-            //}
-
-            //Utilizando Banco de Dados
-            
+            cadastro = new AlunoCadastro(); //Instancia a classe AlunoCadastro
+            CarregarCadastrosLista();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -28,7 +21,7 @@ namespace Cadastro
 
             if (cadastro.ConsultaCpf(boxCpf.Text) && !editar)
             {
-                avisos.Text = "Aluno j· cadastrado.";
+                avisos.Text = "Aluno j√° cadastrado.";
             }
             else if (!VerificaForm())
             {
@@ -43,12 +36,16 @@ namespace Cadastro
                 EditarAluno();
             }
 
-            //Utilizando Json
-            //GerenciaDados.SalvarCadastros(cadastro.ListaGeral());
         }
 
         private void CadastrarAluno()
         {
+            if (cadastro.ConsultaCpf(boxCpf.Text))
+            {
+                avisos.Text = "CPF j√° cadastrado.";
+                return;
+            }
+
             Aluno aluno = new Aluno
             {
                 Nome = boxNome.Text,
@@ -62,40 +59,35 @@ namespace Cadastro
                 Cep = boxCEP.Text
             };
 
-            if(cadastro.ConsultaCpf(aluno.Cpf))
-            {
-                avisos.Text = "CPF j· cadastrado.";
-                LimpaForm();
-                return;
-            }
-            else
-            {
-                cadastro.CadastrarAluno(aluno);
-                listCadastro.Items.Add($"{ aluno.Cpf}-{ aluno.Nome}");
-                LimpaForm();
-            }
-                
+            cadastro.CadastrarAluno(aluno);
+            LimpaForm();
+            CarregarCadastrosLista();
+            avisos.Text = "Aluno cadastrado com sucesso! üßë‚Äçüéì";
         }
 
         private void EditarAluno()
         {
-            Aluno aluno = new Aluno
+            if (alunoSelecionado == null)
             {
-                Nome = boxNome.Text,
-                Telefone = boxTelefone.Text,
-                Cpf = boxCpf.Text,
-                DataNascimento = dateNascimento.Value,
-                Endereco = boxEndereco.Text,
-                Bairro = boxBairro.Text,
-                Cidade = boxCidade.Text,
-                Estado = boxEstado.Text,
-                Cep = boxCEP.Text
-            };
+                avisos.Text = "Nenhum aluno selecionado para editar. üòï";
+                return;
+            }
 
-            cadastro.EditarCadastro(aluno);
+            alunoSelecionado.Nome = boxNome.Text;
+            alunoSelecionado.Telefone = boxTelefone.Text;
+            alunoSelecionado.Cpf = boxCpf.Text;
+            alunoSelecionado.DataNascimento = dateNascimento.Value;
+            alunoSelecionado.Endereco = boxEndereco.Text;
+            alunoSelecionado.Bairro = boxBairro.Text;
+            alunoSelecionado.Cidade = boxCidade.Text;
+            alunoSelecionado.Estado = boxEstado.Text;
+            alunoSelecionado.Cep = boxCEP.Text;
+
+            cadastro.EditarCadastro(alunoSelecionado);
+
             LimpaForm();
-            editar = false;
-            AtivarModoEditar();
+            CarregarCadastrosLista();
+            avisos.Text = "Cadastro editado com sucesso üòé";
         }
 
         private void LimpaForm()
@@ -148,7 +140,7 @@ namespace Cadastro
                     boxCpf.BackColor = Color.White;
                 }
 
-                // EndereÁo
+                // Endere√ßo
                 if (string.IsNullOrWhiteSpace(boxEndereco.Text))
                 {
                     boxEndereco.BackColor = Color.FromArgb(255, 192, 192);
@@ -208,51 +200,21 @@ namespace Cadastro
             }
         }
 
-        private void CarregarCadastro()
+        private void CarregarCadastrosLista()
         {
-            editar = true;
-
-            Aluno aluno = cadastro.CarregaCadastro(listCadastro.SelectedItem.ToString());
-
-            boxNome.Text = aluno.Nome;
-            boxTelefone.Text = aluno.Telefone;
-            boxCpf.Text = aluno.Cpf;
-            dateNascimento.Value = aluno.DataNascimento;
-            boxEndereco.Text = aluno.Endereco;
-            boxEstado.Text = aluno.Estado;
-            boxCidade.Text = aluno.Cidade;
-            boxBairro.Text = aluno.Bairro;
-            boxCEP.Text = aluno.Cep;
-
-            AtivarModoEditar();
-        }
-
-        //Utilizando Json
-        //private void CarregarCadastrosLista()
-        //{
-        //    listCadastro.Items.Clear();
-
-        //    foreach (var aluno in cadastro.ListaGeral())
-        //    {
-        //        listCadastro.Items.Add($"{aluno.Cpf}-{aluno.Nome}");
-        //    }
-        //}
-
-        private void AtivarModoEditar()
-        {
-            if (editar)
+            listCadastro.Items.Clear();
+            List<Aluno> alunosCarregados = cadastro.ListaGeral();
+            foreach(var aluno in alunosCarregados)
             {
-                button1.Text = "Salvar";
-            }
-            else
-            {
-                button1.Text = "Cadastrar";
+                listCadastro.Items.Add($"{aluno.Cpf}-{aluno.Nome}");
             }
         }
+
+        
 
         private void editarBt_Click(object sender, EventArgs e)
         {
-            CarregarCadastro();
+            CarregarCadastrosLista();
         }
 
         private void excluirBtn_Click(object sender, EventArgs e)
@@ -260,18 +222,18 @@ namespace Cadastro
             string alunoExcluir = listCadastro.SelectedItem.ToString();
 
             DialogResult resultado = MessageBox.Show(
-                $"Tem certeza que deseja excluir: {cadastro.ConsultaCpf(alunoExcluir)} ?", "ConfirmaÁ„o",
+                $"Tem certeza que deseja excluir: {cadastro.ConsultaCpf(alunoExcluir)} ?", "Confirma√ß√£o",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
             if (resultado == DialogResult.Yes)
             {
                 cadastro.ExcluirCadastro(alunoExcluir);
-                MessageBox.Show("Aluno excluÌdo com sucesso!");
+                MessageBox.Show("Aluno exclu√≠do com sucesso!");
             }
             else
             {
-                MessageBox.Show("OperaÁ„o cancelada.");
+                MessageBox.Show("Opera√ß√£o cancelada.");
             }
 
             listCadastro.Items.Clear();

@@ -18,24 +18,24 @@ namespace Cadastro
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            if (cadastro.ConsultaCpf(boxCpf.Text) && !editar)
+            if(alunoSelecionado != null)
             {
-                avisos.Text = "Aluno já cadastrado.";
+                SalvarAlunoEditado();
             }
-            else if (!VerificaForm())
-            {
-                avisos.Text = "Preencha todos os dados.";
-            }
-            else if (!editar)
+            else
             {
                 CadastrarAluno();
             }
-            else if (editar)
-            {
-                EditarAluno();
-            }
+        }
 
+        private void SalvarAlunoEditado()
+        {
+            cadastro.EditarCadastro(alunoSelecionado);
+            LimpaForm();
+            CarregarCadastrosLista();
+            button1.Text = "Cadastrar";
+            avisos.Text = "Cadastro atualizado com sucesso!";
+            alunoSelecionado = null;
         }
 
         private void CadastrarAluno()
@@ -43,6 +43,12 @@ namespace Cadastro
             if (cadastro.ConsultaCpf(boxCpf.Text))
             {
                 avisos.Text = "CPF já cadastrado.";
+                return;
+            }
+
+            if(!VerificaForm())
+            {
+                avisos.Text = "Preencha os campos obrigatórios. 🤯";
                 return;
             }
 
@@ -67,27 +73,27 @@ namespace Cadastro
 
         private void EditarAluno()
         {
-            if (alunoSelecionado == null)
+            string? cpf = GetCpfFromSelectedItem();
+            if (string.IsNullOrEmpty(cpf)) return;
+
+            alunoSelecionado = cadastro.CarregaCadastro(cpf);
+
+            if (alunoSelecionado != null)
             {
-                avisos.Text = "Nenhum aluno selecionado para editar. 😕";
-                return;
+                boxNome.Text = alunoSelecionado.Nome;
+                boxTelefone.Text = alunoSelecionado.Telefone;
+                boxCpf.Text = alunoSelecionado.Cpf;
+                dateNascimento.Value = alunoSelecionado.DataNascimento;
+                boxEndereco.Text = alunoSelecionado.Endereco;
+                boxBairro.Text = alunoSelecionado.Bairro;
+                boxCidade.Text = alunoSelecionado.Cidade;
+                boxEstado.Text = alunoSelecionado.Estado;
+                boxCEP.Text = alunoSelecionado.Cep;
             }
 
-            alunoSelecionado.Nome = boxNome.Text;
-            alunoSelecionado.Telefone = boxTelefone.Text;
-            alunoSelecionado.Cpf = boxCpf.Text;
-            alunoSelecionado.DataNascimento = dateNascimento.Value;
-            alunoSelecionado.Endereco = boxEndereco.Text;
-            alunoSelecionado.Bairro = boxBairro.Text;
-            alunoSelecionado.Cidade = boxCidade.Text;
-            alunoSelecionado.Estado = boxEstado.Text;
-            alunoSelecionado.Cep = boxCEP.Text;
-
-            cadastro.EditarCadastro(alunoSelecionado);
-
-            LimpaForm();
-            CarregarCadastrosLista();
-            avisos.Text = "Cadastro editado com sucesso 😎";
+            boxCpf.Enabled = false;
+            button1.Text = "Salvar";
+            avisos.Text = $"Editando: {alunoSelecionado.Nome}";
         }
 
         private void LimpaForm()
@@ -203,8 +209,8 @@ namespace Cadastro
         private void CarregarCadastrosLista()
         {
             listCadastro.Items.Clear();
-            List<Aluno> alunosCarregados = cadastro.ListaGeral();
-            foreach(var aluno in alunosCarregados)
+            
+            foreach(var aluno in cadastro.ListaGeral())
             {
                 listCadastro.Items.Add($"{aluno.Cpf}-{aluno.Nome}");
             }
@@ -214,7 +220,7 @@ namespace Cadastro
 
         private void editarBt_Click(object sender, EventArgs e)
         {
-            CarregarCadastrosLista();
+            EditarAluno();
         }
 
         private void excluirBtn_Click(object sender, EventArgs e)
@@ -247,5 +253,14 @@ namespace Cadastro
             //GerenciaDados.SalvarCadastros(cadastro.ListaGeral());
         }
 
+        private string GetCpfFromSelectedItem()
+        {
+            if (listCadastro.SelectedItem == null)
+                return string.Empty;
+
+            string selectedItem = listCadastro.SelectedItem.ToString();
+            string cpf = selectedItem.Split('-')[0].Trim();
+            return cpf;
+        }
     }
 }

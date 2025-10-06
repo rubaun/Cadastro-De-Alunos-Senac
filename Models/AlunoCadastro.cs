@@ -21,10 +21,13 @@ namespace Cadastro.Models
         
         public Aluno CarregaCadastro(string cpf) 
         {
-            using (var context = new ApplicationDbContext())
+            foreach (var aluno in ListaGeral())
             {
-                return context.Alunos.FirstOrDefault(a => a.Cpf == cpf);
+                    if (aluno.Cpf == cpf)
+                        return aluno;
             }
+               
+            return null;
         }
 
         public bool ConsultaCpf(string cpf)
